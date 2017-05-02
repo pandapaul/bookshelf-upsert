@@ -4,6 +4,7 @@
   "description": "A bookshelf plugin for performing upserts",
   "main": "index.js",
   "scripts": {
+    "pretest": "standard",
     "test": "tap test/*.js --cov"
   },
   "repository": {
@@ -19,5 +20,11 @@
   "bugs": {
     "url": "https://github.com/pandapaul/bookshelf-upsert/issues"
   },
-  "homepage": "https://github.com/pandapaul/bookshelf-upsert#readme"
+  "homepage": "https://github.com/pandapaul/bookshelf-upsert#readme",
+  "devDependencies": {
+    "bookshelf": "^0.10.3",
+    "knex": "^0.13.0",
+    "standard": "^10.0.2",
+    "tap": "^10.3.2"
+  }
 }
