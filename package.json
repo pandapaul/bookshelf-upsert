@@ -1,0 +1,23 @@
+{
+  "name": "bookshelf-upsert",
+  "version": "0.0.1",
+  "description": "A bookshelf plugin for performing upserts",
+  "main": "index.js",
+  "scripts": {
+    "test": "tap test/*.js --cov"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pandapaul/bookshelf-upsert.git"
+  },
+  "keywords": [
+    "bookshelf",
+    "upsert"
+  ],
+  "author": "Paul Anderson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pandapaul/bookshelf-upsert/issues"
+  },
+  "homepage": "https://github.com/pandapaul/bookshelf-upsert#readme"
+}
