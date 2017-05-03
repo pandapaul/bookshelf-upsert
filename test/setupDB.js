@@ -4,8 +4,7 @@ function init () {
   return bookshelf.knex.schema
     .dropTableIfExists('users')
     .createTable('users', table => {
-      table.increments('id')
-      table.string('email').unique()
+      table.string('email').primary()
       table.string('firstName')
       table.string('lastName')
       table.unique(['firstName', 'lastName'])

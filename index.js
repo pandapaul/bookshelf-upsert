@@ -4,7 +4,7 @@ module.exports = bookshelf => {
     upsert (data) {
       // const key = [].concat(this.constructor.upsertKey || this.idAttribute)
       const clone = this.clone()
-      clone.fetch()
+      return clone.fetch()
       .then((match) => {
         if (match) {
           return this.save(data, { method: 'update' })

@@ -6,7 +6,8 @@ const knex = Knex({
   client: 'sqlite3',
   connection: {
     filename: './testdb.sqlite'
-  }
+  },
+  useNullAsDefault: true
 })
 const bookshelf = Bookshelf(knex)
 bookshelf.plugin(upsert)

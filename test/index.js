@@ -1,7 +1,16 @@
-const tap = require('tap')
-const bookshelf = require('./bookshelf')
+const { describe, it, before } = require('mocha')
+const should = require('should')
 const userModel = require('./model/user')
+const setupDB = require('./setupDB')
 
-tap.test('should be able to upsert', (t) => {
+before(setupDB.init)
 
+describe('upsert', () => {
+  it('inserts a new user when no matching one exists', () => {
+    return userModel.forge().upsert()
+    .then(user => {
+      should(user).be.ok()
+      user.get('id').should.be.ok()
+    })
+  })
 })
