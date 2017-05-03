@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "pretest": "standard",
-    "test": "tap test/*.js --cov"
+    "test": "tap test/index.js --cov"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,7 @@
   "devDependencies": {
     "bookshelf": "^0.10.3",
     "knex": "^0.13.0",
+    "sqlite3": "^3.1.8",
     "standard": "^10.0.2",
     "tap": "^10.3.2"
   }
