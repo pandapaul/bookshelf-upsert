@@ -10,7 +10,7 @@ describe('upsert', () => {
     return userModel.forge().upsert()
     .then(user => {
       should(user).be.ok()
-      user.get('id').should.be.ok()
+      user.get('email').should.be.ok()
     })
   })
 })
