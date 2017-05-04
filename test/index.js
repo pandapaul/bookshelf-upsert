@@ -69,12 +69,10 @@ describe('upsert', () => {
 
   it('performs an update when a unique key is the same', () => {
     let created, updated
-    const sameUser = {
-      email: 'one@test.com',
+    return userModel.forge({
       firstName: 'User',
       lastName: 'Two'
-    }
-    return userModel.forge(sameUser)
+    }).where({ email: 'one@test.com' })
     .on('created', () => {
       created = true
     })
