@@ -2,6 +2,7 @@
 
 > A [Bookshelf](http://www.bookshelfjs.org/) plugin that adds `model.upsert()`
 
+[![Build Status](https://travis-ci.org/pandapaul/bookshelf-upsert.svg?branch=master)](https://travis-ci.org/pandapaul/bookshelf-upsert)
 
 ## Install
 
