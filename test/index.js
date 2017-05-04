@@ -85,4 +85,25 @@ describe('upsert', () => {
       should(updated).be.ok()
     })
   })
+
+  it('performs an update when a complex unique key is the same', () => {
+    let created, updated
+    return userModel.forge({
+      email: 'two@test.com'
+    }).where({
+      firstName: 'User',
+      lastName: 'One'
+    })
+    .on('created', () => {
+      created = true
+    })
+    .on('updated', () => {
+      updated = true
+    })
+    .upsert()
+    .then(user => {
+      should(created).not.be.ok()
+      should(updated).be.ok()
+    })
+  })
 })
