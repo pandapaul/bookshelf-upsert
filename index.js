@@ -1,11 +1,11 @@
 
 module.exports = bookshelf => {
   bookshelf.Model = bookshelf.Model.extend({
-    upsert (data) {
-      return this.save(data, { method: 'update' })
+    upsert (attributes) {
+      return this.save(attributes, { method: 'update' })
       .catch(err => {
         if (err instanceof bookshelf.Model.NoRowsUpdatedError) {
-          return this.save(data, { method: 'insert' })
+          return this.save(attributes, { method: 'insert' })
         }
         throw err
       })

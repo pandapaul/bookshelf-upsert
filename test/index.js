@@ -106,4 +106,31 @@ describe('upsert', () => {
       should(updated).be.ok()
     })
   })
+
+  it('accepts attributes as a parameter and saves it when inserting', () => {
+    let created, updated
+    const anotherUser = {
+      id: aUserId + 1
+    }
+    const attributes = {
+      email: 'two@test.com',
+      firstName: 'User',
+      lastName: 'Two'
+    }
+    return userModel.forge(anotherUser)
+    .on('created', () => {
+      created = true
+    })
+    .on('updated', () => {
+      updated = true
+    })
+    .upsert(attributes)
+    .then(user => {
+      should(created).be.ok()
+      should(updated).not.be.ok()
+      user.get('email').should.equal(attributes.email)
+      user.get('firstName').should.equal(attributes.firstName)
+      user.get('lastName').should.equal(attributes.lastName)
+    })
+  })
 })
