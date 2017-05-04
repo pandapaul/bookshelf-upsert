@@ -47,4 +47,22 @@ describe('upsert', () => {
       should(updated).not.be.ok()
     })
   })
+  it('performs an update when primary key is the same', () => {
+    let created, updated
+    const sameUser = {
+      id: aUser.id
+    }
+    return userModel.forge(sameUser)
+    .on('created', () => {
+      created = true
+    })
+    .on('updated', () => {
+      updated = true
+    })
+    .upsert()
+    .then(user => {
+      should(created).not.be.ok()
+      should(updated).be.ok()
+    })
+  })
 })
