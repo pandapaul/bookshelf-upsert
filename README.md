@@ -25,7 +25,7 @@ bookshelf.plugin(upsert)
 ```js
 const model = require('a-bookshelf-model')
 
-model.forge({ some: 'data' }).upsert({ optional: 'attributes' })
+model.forge({ some: 'data' }).where({ optional: 'constraint' }).upsert({ optional: 'attributes' })
 ```
 
 
