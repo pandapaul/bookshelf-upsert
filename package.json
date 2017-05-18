@@ -1,6 +1,6 @@
 {
   "name": "bookshelf-upsert",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "A bookshelf plugin for performing upserts",
   "main": "index.js",
   "scripts": {
