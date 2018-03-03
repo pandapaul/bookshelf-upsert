@@ -2,6 +2,7 @@ const { describe, it, before, beforeEach, afterEach } = require('mocha')
 const should = require('should')
 const userModel = require('./model/user')
 const setupDB = require('./setupDB')
+const bookshelf = require('./config/bookshelf')
 
 before(setupDB.init)
 
@@ -159,5 +160,105 @@ describe('upsert', () => {
       user.get('firstName').should.equal(attributes.firstName)
       user.get('lastName').should.equal(attributes.lastName)
     })
+  })
+
+  it('accepts attributes as a parameter and saves it when inserting', () => {
+    let created, updated
+    const anotherUser = {
+      id: aUserId + 1
+    }
+    const attributes = {
+      email: 'two@test.com',
+      firstName: 'User',
+      lastName: 'Two'
+    }
+    return userModel.forge(anotherUser)
+      .on('created', () => {
+        created = true
+      })
+      .on('updated', () => {
+        updated = true
+      })
+      .upsert(attributes)
+      .then(user => {
+        should(created).be.ok()
+        should(updated).not.be.ok()
+        user.get('email').should.equal(attributes.email)
+        user.get('firstName').should.equal(attributes.firstName)
+        user.get('lastName').should.equal(attributes.lastName)
+      })
+  })
+
+  it('accepts options as a parameter and applies them when updating', () => {
+    const anotherUser = {
+      id: aUserId
+    }
+    const attributes = {
+      email: 'two@test.com',
+      firstName: 'User',
+      lastName: 'Two'
+    }
+    const options = {
+      default: true,
+      patch: false,
+      transacting: {foo: 'bar'}
+    }
+
+    let user = userModel.forge(anotherUser)
+
+    let saveCalled
+    user.save = (attrs, opts) => {
+      should(opts).have.property('transacting', options.transacting)
+      should(opts).have.property('patch', options.patch)
+      should(opts).have.property('default', options.default)
+
+      saveCalled = true
+
+      return Promise.resolve()
+    }
+
+    return user.upsert(attributes, options)
+      .then(() => {
+        should(saveCalled).be.ok()
+      })
+  })
+
+  it('accepts options as a parameter and applies them when inserting', () => {
+    const anotherUser = {
+      id: aUserId
+    }
+    const attributes = {
+      email: 'two@test.com',
+      firstName: 'User',
+      lastName: 'Two'
+    }
+    const options = {
+      default: true,
+      patch: false,
+      transacting: {
+        foo: 'bar'
+      }
+    }
+
+    let user = userModel.forge(anotherUser)
+
+    let callCount = 0
+    user.save = (attrs, opts) => {
+      let method = callCount === 0 ? 'update' : 'insert'
+      should(opts).have.property('transacting', options.transacting)
+      should(opts).have.property('patch', options.patch)
+      should(opts).have.property('default', options.default)
+
+      callCount += 1
+
+      return method === 'update'
+        ? Promise.reject(new bookshelf.Model.NoRowsUpdatedError())
+        : Promise.resolve()
+    }
+
+    return user.upsert(attributes, options)
+      .then(() => {
+        callCount.should.equal(2)
+      })
   })
 })
