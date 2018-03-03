@@ -33,9 +33,9 @@ model.forge({ some: 'data' })
 
 ## API
 
-### model.upsert([attributes])
+### model.upsert([attributes], [options])
 
-Bookshelf model instances are provided the `upsert` method, which may optionally be given attributes to save.  The attributes are simply passed along to `model.save()`.  This implementation of upsert first attempts an update then if no rows are updated it follows up with an insert.  
+Bookshelf model instances are provided the `upsert` method, which may be given attributes and options that will be passed along to `model.save()`.  This implementation of upsert first attempts an update then if no rows are updated it follows up with an insert.  
 
 
 ## License
